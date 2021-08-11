@@ -11,7 +11,7 @@
     </Appenders>
 
     <loggers>
-        <root level="debug" additivity="true"> <!--debug 를 error로 변경하면  log에 에러가 찍힌다.-->
+        <root level="info" additivity="true"> <!--debug 를 error로 변경하면  log에 에러가 찍힌다.-->
             <AppenderRef ref="console"/>
         </root>
     </loggers>

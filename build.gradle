@@ -23,6 +23,10 @@ tasks.withType(JavaCompile) {
 
 dependencies {
     implementation 'org.projectlombok:lombok:1.18.20'
+    implementation 'junit:junit:4.13.1'
+    implementation 'junit:junit:4.13.1'
+    implementation 'junit:junit:4.13.1'
+    implementation 'org.junit.jupiter:junit-jupiter:5.7.0'
     compileOnly('javax.servlet:javax.servlet-api:4.0.1')
 
     testImplementation("org.junit.jupiter:junit-jupiter-api:${junitVersion}")
@@ -40,8 +44,13 @@ dependencies {
     compileOnly group: 'org.projectlombok', name: 'lombok', version: '1.18.20'
 
     annotationProcessor group: 'org.projectlombok', name: 'lombok', version: '1.18.20'
+    testCompileOnly group: 'org.projectlombok', name: 'lombok', version: '1.18.20'
 
     testAnnotationProcessor group: 'org.projectlombok', name: 'lombok', version: '1.18.20'
+
+    // https://mvnrepository.com/artifact/mysql/mysql-connector-java
+    implementation group: 'mysql', name: 'mysql-connector-java', version: '8.0.25'
+
 }
 
 test {
