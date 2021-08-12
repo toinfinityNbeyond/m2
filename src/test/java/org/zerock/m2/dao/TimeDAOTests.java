@@ -15,6 +15,10 @@ public class TimeDAOTests {
         String timeStr = TimeDAO.INSTANCE.getTime();
 
         Assertions.assertNotNull(timeStr);
+        //Assert 확신하다 . 이 테스트 결과는 null이 아닐것을 확신해야하다.
+        //TDD(Test Driven Development) 테스트 주도 개발- 반복 테스트를 이용한 소프트웨어 방법론으로,
+        // 작은 단위의 테스트 케이스를 작성하고 통과하는 코드를 추가하는 단계를 반복하여 구현한다.
+        //실패하는 코드를 짜고 그 코드를 고쳐서 성공하게 만들고 다음 단계로 넘어간다.
 
     }
 }

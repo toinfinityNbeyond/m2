@@ -21,7 +21,73 @@ public enum MsgDAO {
             "where whom=? or who=? \n" +
             "order by kind asc, mno desc";
 
-    public void insert(MsgDTO msgDTO) throws RuntimeException {
+    private static final String SQL_SELECT = "select mno, who, whom, content, regdate, opendate from tbl_msg where mno =?";
+    //"select * from tbl_msg where mno =?";  여기서 *로 하면 알아보기 힘들어서 컬럼명으로 바꾼다.
+    // mno 값을 받아서 -> 해당 mno의 다른 값들(who,whom 등)을 불러오는 구문
+
+    private static final String SQL_UPDATE_OPEN = "update tbl_msg set opendate = now() where mno =?";
+
+    private static final String SQL_DELETE =  "delete from tbl_msg where mno=? and who=?";
+
+    public void delete(Long mno, String who) throws RuntimeException {
+
+        new JdbcTemplate() {
+            @Override
+            protected void execute() throws Exception { //jdbc 인덱스 번호는 1부터시작
+                //who,whom,content
+                preparedStatement = connection.prepareStatement(SQL_DELETE);
+                preparedStatement.setLong(1,mno);
+                preparedStatement.setString(2,who);
+                preparedStatement.executeUpdate();
+
+            }
+        }.makeAll();
+
+    }
+
+    public MsgDTO select(Long mno) throws RuntimeException{
+
+        MsgDTO msgDTO = MsgDTO.builder().build();
+
+        new JdbcTemplate() {
+            @Override
+            protected void execute() throws Exception { //jdbc 인덱스 번호는 1부터시작
+                //who,whom,content
+
+                preparedStatement = connection.prepareStatement(SQL_UPDATE_OPEN);
+                preparedStatement.setLong(1,mno);
+
+                preparedStatement.executeUpdate();
+
+                preparedStatement.close();
+                preparedStatement = null;
+
+                preparedStatement = connection.prepareStatement(SQL_SELECT);
+                preparedStatement.setLong(1,mno); 
+                resultSet = preparedStatement.executeQuery();
+
+                resultSet.next();
+
+                msgDTO.setMno(resultSet.getLong(1));
+                msgDTO.setWho(resultSet.getString(2));
+                msgDTO.setWhom(resultSet.getString(3));
+                msgDTO.setContent(resultSet.getString(4));
+                msgDTO.setContent(resultSet.getString(5));
+
+                msgDTO.setContent(resultSet.getString(6));
+
+
+            }
+        }.makeAll();
+        return msgDTO;
+    }
+
+
+
+
+
+
+    public void insert(MsgDTO msgDTO) throws RuntimeException { //자신없으면 void
 
         new JdbcTemplate() {
             @Override
@@ -66,7 +132,9 @@ public enum MsgDAO {
 
                 log.info(resultSet); // 결과집합
 
+                //데이터의 갯수가 몇개인지 모름. 커서를 아래로 몇개로 이동해야하는지 모름. 그래서 사용함.
                 while(resultSet.next()){ // 다음 ㄷㅔ이터를 받아오려고 next
+
 
                     String kind = resultSet.getString(4); // 같은 문장 log.info(resultSet.getString(4));
 

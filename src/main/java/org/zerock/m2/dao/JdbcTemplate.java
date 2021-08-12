@@ -8,7 +8,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
 @Log4j2
-abstract class JdbcTemplate {  //클래스가 퍼블릭일 필요가 없다. dao에서만 바라보면 돼서
+abstract class JdbcTemplate {  //다른 패키지에서 바라볼 일이 없고 DAO에서만 바라보면 돼서 클래스가 public 일 필요가 없다.
 
     static{
         try {
